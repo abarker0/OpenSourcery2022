@@ -222,7 +222,7 @@ def main():
 
     print(Course(API.get_course_by_id("BMGT340")).prereqs)
 
-    prev_courses = ['MATH140', 'CMSC131', 'MATH141']
+    prev_courses = ['MATH115', 'MATH131', 'MATH140', 'CMSC131', 'MATH141']
     course_list = [CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
 
     print(schedule.build_schedule(course_list, previous_courses=prev_courses))
