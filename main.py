@@ -4,7 +4,7 @@ import APIHandler
 courses_taken = []
 
 def main():
-    API = APIHandler.ApiHandler("https://api.umd.io/v1")
+    API = APIHandler.API()
 
 
 
@@ -22,7 +22,7 @@ def main():
         )
     while(response != "END"):
         try:
-            course = API.get_course_by_id(response) # check if response is valid course
+            course = Course(response) # check if response is valid course
             courses_taken.append(course)
             print(response + " successfully added.")
         except KeyError:

@@ -11,7 +11,10 @@ Fields:
 :prereqs: course prerequisites
 """
 class Course:
-    def __init__(self, course_info):
+    def __init__(self, course_id):
+        API = APIHandler.API()
+        course_info = API.get_course_by_id(course_id)
+
         self.id = course_info[0]['course_id']
         self.name = course_info[0]["name"]
         self.description = course_info[0]["description"]
@@ -121,8 +124,8 @@ class Schedule:
                 prereq_len = len(prereqs)
                 while (prereq_pos < prereq_len):
                     prereq_fulfilled = False
-                    
-                    # if prereq is scheduled for current semester or still in list of courses to be scheduled, 
+
+                    # if prereq is scheduled for current semester or still in list of courses to be scheduled,
                     # leave it in list and check others
                     if not (prereqs[prereq_pos] in self.courses_scheduled[semester_pos] or prereqs[prereq_pos] in courses):
 
@@ -131,7 +134,7 @@ class Schedule:
                             del prereqs[prereq_pos]
                             prereq_len = len(prereqs)
                             prereq_fulfilled = True
-                        
+
                         # if not, check if prereq is scheduled to be taken in a previous semester
                         else:
                             for prev_semester_pos in range(semester_pos):
@@ -141,12 +144,12 @@ class Schedule:
                                     prereq_len = len(prereqs)
                                     prereq_fulfilled = True
                                     break
-                        
+
                         if not prereq_fulfilled:
                             if not course.id in unfulfilled_prereqs:
                                 unfulfilled_prereqs[course.id] = []
                             unfulfilled_prereqs[course.id].append(prereqs[prereq_pos])
-                    
+
                     if not prereq_fulfilled:
                         prereq_pos += 1
 
@@ -213,36 +216,3 @@ class Schedule:
             fschedule += "\n"
             counter += 1
         return fschedule
-
-def main():
-    API = APIHandler.ApiHandler("https://api.umd.io/v1")
-
-    MATH140 = Course(API.get_course_by_id("MATH140"))
-    CMSC131 = Course(API.get_course_by_id("CMSC131"))
-    MATH141 = Course(API.get_course_by_id("MATH141"))
-    CMSC132 = Course(API.get_course_by_id("CMSC132"))
-    CMSC216 = Course(API.get_course_by_id("CMSC216"))
-    CMSC250 = Course(API.get_course_by_id("CMSC250"))
-    CMSC330 = Course(API.get_course_by_id("CMSC330"))
-    CMSC351 = Course(API.get_course_by_id("CMSC351"))
-    MATH240 = Course(API.get_course_by_id("MATH240"))
-    STAT400 = Course(API.get_course_by_id("STAT400"))
-
-    print(Course(API.get_course_by_id("BMGT340")).prereqs)
-
-    schedule = Schedule(['MATH115', 'MATH131', 'MATH140', 'CMSC131'])
-    # schedule.build_schedule([CMSC216, CMSC351], ['MATH115', 'MATH131', 'MATH140', 'CMSC131'])
-    prev_courses = ['MATH115', 'MATH131', 'MATH140', 'CMSC131']
-    course_list = [MATH141, CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
-
-    print(schedule.build_schedule(course_list, previous_courses=prev_courses))
-
-    schedule2 = Schedule(['MATH115', 'MATH131', 'MATH140', 'CMSC131', 'MATH141'])
-    prev_courses = ['MATH115', 'MATH131', 'MATH140', 'CMSC131', 'MATH141']
-    course_list = [CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
-
-    print(schedule2.build_schedule(course_list, previous_courses=prev_courses))
-
-
-if __name__ == "__main__":
-    main()

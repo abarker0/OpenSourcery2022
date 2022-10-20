@@ -3,10 +3,10 @@ from urllib.request import urlopen
 import json
 import pprint
 
-API = "https://api.umd.io/v1"
+API_url = "https://api.umd.io/v1"
 
-class ApiHandler():
-    def __init__(self, url, semester=None):
+class API():
+    def __init__(self, url=API_url, semester=None):
         self.api = url
         if semester:
             self.semester = str(semester)
