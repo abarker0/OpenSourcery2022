@@ -1,9 +1,8 @@
 import APIHandler
-from courses import Course, Schedule
+from course import Course
+from schedule import Schedule
 
 def main():
-    API = APIHandler.API()
-
     MATH140 = Course("MATH140")
     CMSC131 = Course("CMSC131")
     MATH141 = Course("MATH141")
@@ -16,7 +15,6 @@ def main():
     STAT400 = Course("STAT400")
 
     schedule = Schedule(['MATH115', 'MATH131', 'MATH140', 'CMSC131'])
-    # schedule.build_schedule([CMSC216, CMSC351], ['MATH115', 'MATH131', 'MATH140', 'CMSC131'])
     prev_courses = ['MATH115', 'MATH131', 'MATH140', 'CMSC131']
     course_list = [MATH141, CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
 
