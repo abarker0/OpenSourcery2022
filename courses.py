@@ -97,14 +97,6 @@ class Schedule:
                                     req = course
                                     break
 
-
-    def can_take(self, course):
-        num_prereqs = len(course.prereqs)
-        for prereq in course.prereqs:
-            if prereq in self.courses_taken or prereq in self.courses_scheduled:
-                numPrereqs -= 1
-        return numPrereqs == 0 and not course in self.courses_taken and not course in self.courses_scheduled
-
     def build_schedule(self, courses_to_schedule, previous_courses=[], max_credits=16):
         courses = courses_to_schedule.copy()
         self.courses_scheduled = [[]]
@@ -114,7 +106,7 @@ class Schedule:
         semester = self.courses_scheduled[semester_pos]
 
         no_prereqs_counter = 0
-        end_semester_early = 0
+        unfulfilled_prereqs = {}
 
         while courses != []:
             if pos >= len(courses):
@@ -123,21 +115,40 @@ class Schedule:
 
             if semester_credits + course.credits <= max_credits:
                 # check if already taken prereqs (super jank)
-                prereqs = course.prereqs
-                if prereqs != []:
-                    for c in courses: # check courses to be scheduled to see if student hasn't taken prereqs
-                        if c in prereqs:
-                            prereqs.remove(c)
-                    if previous_courses != []: # check all previous courses to see if student already took prereqs
-                        for prev in previous_courses:
-                            if prev in prereqs:
-                                prereqs.remove(prev)
-                    if prereqs != []:  # check all scheduled courses to see if student will have taken prereqs
-                        for i in range(semester_pos):
-                            curr_semester = self.courses_scheduled[i]
-                            for c in curr_semester:
-                                if c in prereqs:
-                                    prereqs.remove(c)
+                prereqs = course.prereqs.copy()
+
+                prereq_pos = 0
+                prereq_len = len(prereqs)
+                while (prereq_pos < prereq_len):
+                    prereq_fulfilled = False
+                    
+                    # if prereq is scheduled for current semester or still in list of courses to be scheduled, 
+                    # leave it in list and check others
+                    if not (prereqs[prereq_pos] in self.courses_scheduled[semester_pos] or prereqs[prereq_pos] in courses):
+
+                        # otherwise, check if prereq is already fulfilled by previous courses
+                        if previous_courses and prereqs[prereq_pos] in previous_courses:
+                            del prereqs[prereq_pos]
+                            prereq_len = len(prereqs)
+                            prereq_fulfilled = True
+                        
+                        # if not, check if prereq is scheduled to be taken in a previous semester
+                        else:
+                            for prev_semester_pos in range(semester_pos):
+                                prev_semester = self.courses_scheduled[prev_semester_pos]
+                                if prereqs[prereq_pos] in prev_semester:
+                                    del prereqs[prereq_pos]
+                                    prereq_len = len(prereqs)
+                                    prereq_fulfilled = True
+                                    break
+                        
+                        if not prereq_fulfilled:
+                            if not course.id in unfulfilled_prereqs:
+                                unfulfilled_prereqs[course.id] = []
+                            unfulfilled_prereqs[course.id].append(prereqs[prereq_pos])
+                    
+                    if not prereq_fulfilled:
+                        prereq_pos += 1
 
                 if len(prereqs) == 0:
                     semester.append(course)
@@ -147,26 +158,24 @@ class Schedule:
                     no_prereqs_counter += 1
                     pos += 1
 
-            if semester_credits == max_credits or no_prereqs_counter >= len(courses):
-                if end_semester_early > 1:
+            # if none of the courses left to be scheduled can be taken, and the current semester is empty,
+            # show what prereqs are needed to take the remaining courses
+            if no_prereqs_counter >= len(courses):
+                if not semester:
                     missing_prereqs = ""
-                    for c in courses:
-                        if c.prereqs != []:
-                            missing_prereqs += "{"+str(c) + ":"
-                            for p in c.prereqs:
-                                missing_prereqs += " " + p
-                            missing_prereqs += "} "
+                    for c in unfulfilled_prereqs.keys():
+                        missing_prereqs += "{"+ c + ":"
+                        for prereq in unfulfilled_prereqs[c]:
+                            missing_prereqs += " " + prereq
+                        missing_prereqs += "} "
                     raise Exception("You're missing some prereqs for the courses you entered. Prereqs missing: " + missing_prereqs)
-                if no_prereqs_counter >= len(courses):
-                    end_semester_early += 1
-                else:
-                    end_semester_early = 0
-
-                self.courses_scheduled.append([])
-                semester_pos += 1
-                semester = self.courses_scheduled[semester_pos]
-                semester_credits = 0
-                pos += 1
+                elif courses:
+                    self.courses_scheduled.append([])
+                    semester_pos += 1
+                    semester = self.courses_scheduled[semester_pos]
+                    semester_credits = 0
+                    no_prereqs_counter = 0
+                    pos += 1
 
         return self.format_schedule(self.courses_scheduled, name=True, description=True, credits=True, gen_ed=True, dept_id=True, prereqs=True)
 
@@ -208,7 +217,6 @@ class Schedule:
 def main():
     API = APIHandler.ApiHandler("https://api.umd.io/v1")
 
-    schedule = Schedule(['MATH115', 'MATH131', 'MATH140', 'CMSC131', 'MATH141'])
     MATH140 = Course(API.get_course_by_id("MATH140"))
     CMSC131 = Course(API.get_course_by_id("CMSC131"))
     MATH141 = Course(API.get_course_by_id("MATH141"))
@@ -222,10 +230,18 @@ def main():
 
     print(Course(API.get_course_by_id("BMGT340")).prereqs)
 
+    schedule = Schedule(['MATH115', 'MATH131', 'MATH140', 'CMSC131'])
+    # schedule.build_schedule([CMSC216, CMSC351], ['MATH115', 'MATH131', 'MATH140', 'CMSC131'])
+    prev_courses = ['MATH115', 'MATH131', 'MATH140', 'CMSC131']
+    course_list = [MATH141, CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
+
+    print(schedule.build_schedule(course_list, previous_courses=prev_courses))
+
+    schedule2 = Schedule(['MATH115', 'MATH131', 'MATH140', 'CMSC131', 'MATH141'])
     prev_courses = ['MATH115', 'MATH131', 'MATH140', 'CMSC131', 'MATH141']
     course_list = [CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
 
-    print(schedule.build_schedule(course_list, previous_courses=prev_courses))
+    print(schedule2.build_schedule(course_list, previous_courses=prev_courses))
 
 
 if __name__ == "__main__":
