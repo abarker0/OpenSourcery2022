@@ -1,9 +1,10 @@
 from course import Course
 
 class Schedule:
-    def __init__(self, courses_taken):
+    def __init__(self, courses_taken, max_credits=16):
         self.courses_taken = courses_taken
         self.courses_scheduled = [[]]
+        self.max_credits = max_credits
         self.requirements = {
             "major": {
                 "CMSC131": "",
@@ -58,7 +59,7 @@ class Schedule:
                                     req = course
                                     break
 
-    def build_schedule(self, courses_to_schedule, previous_courses=[], max_credits=16):
+    def build_schedule(self, courses_to_schedule, previous_courses=[]):
         courses = courses_to_schedule.copy()
         self.courses_scheduled = [[]]
         pos = 0
@@ -74,7 +75,7 @@ class Schedule:
                 pos = 0
             course = courses[pos]
 
-            if semester_credits + course.credits <= max_credits:
+            if semester_credits + course.credits <= self.max_credits:
                 # check if already taken prereqs (super jank)
                 prereqs = course.prereqs.copy()
 

@@ -27,8 +27,6 @@ def main():
         response = input("Enter another course or enter \"END\" to stop.\n" +\
                 "> ")
 
-    schedule = Schedule(coursesTaken)
-
 
     # ask user for schedule customization (max credits per semester)
     max_credits = 16
@@ -50,11 +48,8 @@ def main():
             response = input("> ")
 
 
-    # calculate the major classes they still need to take and the minimum number of semesters (just use CMSC4xx for optional elective classes)
-    # determine the gen eds they still need to take and calculate the best classes to fulfill them
-    # assign the gen ed classes to the semesters that still have room up to x credits
-    # print courses in each semester with credits and gen-eds fulfilled
-
+    schedule = Schedule(coursesTaken, max_credits=max_credits)
+    print(schedule.build_schedule())
 
 if __name__ == "__main__":
     main()
