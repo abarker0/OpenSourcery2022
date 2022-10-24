@@ -9,7 +9,7 @@ def main():
     API = APIHandler.API()
 
     # intro
-    print("Welcome to My Little College Advisor. We will help you create your semester plans at the University of Maryland College Park.")
+    print("Welcome to Mini College Advisor. We will help you create your semester plans at the University of Maryland College Park.")
     print("Right now we only offer course selection help for Computer Science majors.")
 
     # ask user for classes they've taken to calculate gen eds and major classes they don't need
@@ -17,16 +17,36 @@ def main():
             "Enter a course ID for a course you've already taken or received credit for. Please enter one at a time in the format \"DEPTxxx\", for example: \"ENGL101\".\n" + \
             "To stop, enter \"END\".\n" + \
             "> ")
-    while(response != "END"):
-        try:
-            course = Course(response) # check if response is valid course
-            courses_taken.append(course)
-            print(response + " successfully added.")
-        except KeyError:
-            print("The course ID you entered is not a valid course.")
-        response = input("Enter another course or enter \"END\" to stop.\n" +\
+    done = False
+    while (not done):
+        if response == "END":
+            while (not done):
+                response = input("Please enter the highest math course you received credit for or were placed into, even if you already entered it.\n" \
+                    "> ")
+                try:
+                    course = Course(response) # check if response is valid course
+                    if response[0:4] == "MATH"
+                        math_course = course
+                        done = True
+                        break
+                    else:
+                        print("The course ID you entered is not a valid math course.")
+                except KeyError:
+                    print("The course ID you entered is not a valid course.")
+
+        else:
+            try:
+                course = Course(response) # check if response is valid course
+                courses_taken.append(course)
+                print(response + " successfully added.")
+            except KeyError:
+                print("The course ID you entered is not a valid course.")
+            response = input("Enter another course or enter \"END\" to stop.\n" +\
                 "> ")
 
+    response = input(
+            "If you didn't enter"
+    )
 
     # ask user for schedule customization (max credits per semester)
     max_credits = 16
@@ -48,7 +68,7 @@ def main():
             response = input("> ")
 
 
-    schedule = Schedule(coursesTaken, max_credits=max_credits)
+    schedule = Schedule(coursesTaken, max_credits, math_course)
     print(schedule.build_schedule())
 
 if __name__ == "__main__":
