@@ -78,7 +78,7 @@ class Schedule:
 
             else:
                 if gen_ed in self.requirements["gen_ed"].keys():
-                    self.requirements["gen_ed"][requirement] == req
+                    self.requirements["gen_ed"]["requirement"] == req
                     break
                 elif str(req)[0:3] == "PLC": # if not PLC, already fulfilled gen-ed credits
                     raise KeyError(req + " is not a valid PLC.")
@@ -102,6 +102,8 @@ class Schedule:
                                 if req == "":
                                     req = course
                                     break
+    def show_gen_eds(self):
+        return self.requirements["gen_ed"]
 
     def build_schedule(self, courses_to_schedule):
         courses = courses_to_schedule.copy()
