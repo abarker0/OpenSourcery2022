@@ -2,6 +2,8 @@ import urllib.error
 from urllib.request import urlopen
 import json
 import pprint
+import numpy as np
+
 
 API = "https://api.umd.io/v1"
 
@@ -15,6 +17,14 @@ class ApiHandler():
         self.num_courses = len(self.sendQuery("courses/list", pages=False))
 
     def getCourse(self, dept_id=None, credits=None, gen_ed=None):
+        """
+        Get a Course with the given values:
+
+        :param dept_id: The ID of the department. EX: CMSC
+        :param credits: The number of credits of the class. [1,4]
+        :param gen_ed: The GenEd that the class fulfills. EX: FSAW
+        :return: A JSON representing the courses that were successfully retrieved.
+        """
         query = "/courses?"
         first = True
         if dept_id:
@@ -30,7 +40,26 @@ class ApiHandler():
                 query += "&"
             query += "gen_ed=" + gen_ed
             first = False
-        return self.sendQuery(query)
+        try:
+            return self.sendQuery(query)
+        except urllib.error.HTTPError as e:
+            raise KeyError("The given call is invalid. Call: " + query)
+
+    def filterGenEd(self, courses):
+        filteredCourses = {}
+        for course in courses:
+            genEds = set()
+            for genEdList in course["gen_ed"]:
+                for genEd in genEdList:
+                    genEds.add(genEd)
+            for genEd in genEds:
+                if genEd in filteredCourses:
+                    filteredCourses[genEd].append(course)
+                else:
+                    filteredCourses[genEd] = [course]
+        return filteredCourses
+
+
 
     def getCourseByID(self, course_id):
         """
@@ -43,18 +72,6 @@ class ApiHandler():
             return self.sendQuery("/courses/" + course_id, pages=False)
         except urllib.error.HTTPError as e:
             raise KeyError("The course \"" + course_id + "\" does not exist.")
-
-    def getCourseByDPT(self, dpt_id):
-        """
-        Get all course given the department. Returns a JSON representing all courses in the department.
-
-        :param course_id: The ID of the department, in the form [Department] (ex: CMSC)
-        :return: A JSON representation the courses.
-        """
-        try:
-            return self.sendQuery("/courses?dept_id=" + dpt_id)
-        except urllib.error.HTTPError as e:
-            raise KeyError("The department \"" + dpt_id + "\" does not exist.")
 
     def sendQuery(self, query, pages=True, semester=True):
         """
