@@ -7,6 +7,7 @@ courses_taken = []
 
 def main():
     API = APIHandler.API()
+    schedule = Schedule()
 
     # intro
     print("Welcome to Mini College Advisor. We will help you create your semester plans at the University of Maryland College Park.")
@@ -14,14 +15,15 @@ def main():
 
     # ask user for classes they've taken to calculate gen eds and major classes they don't need
     response = input(
-            "Enter a course ID for a course you've already taken or received credit for. Please enter one at a time in the format \"DEPTxxx\", for example: \"ENGL101\".\n" + \
+            "Enter a course ID for a course you've already taken or received credit for. Please enter one at a time in the format \"DEPTxxx\". For example: \"ENGL101\".\n" + \
+            "If you received prior learning credit (eg: AP, IB), enter \"PLC\" followed by the gen ed credit received and separated by a space. For example: \"PLC FSAW\".\n" + \
             "To stop, enter \"END\".\n" + \
             "> ")
     done = False
     while (not done):
         if response == "END":
             while (not done):
-                response = input("Please enter the highest math course you received credit for or were placed into, even if you already entered it.\n" \
+                response = input("Enter the highest math course you received credit for or were placed into, even if you already entered it.\n" \
                     "> ")
                 try:
                     course = Course(response) # check if response is valid course
@@ -38,15 +40,19 @@ def main():
             try:
                 course = Course(response) # check if response is valid course
                 courses_taken.append(course)
+                schedule.add_requirement(course)
                 print(response + " successfully added.")
             except KeyError:
-                print("The course ID you entered is not a valid course.")
-            response = input("Enter another course or enter \"END\" to stop.\n" +\
+                if response[0:3] == "PLC":
+                    try:
+                        schedule.add_requirement(response)
+                    except KeyError:
+                        print("The PLC you entered is not a valid PLC.")
+                else:
+                    print("The input entered is not a valid course or PLC.")
+            response = input("Enter another course or PLC or enter \"END\" to stop.\n" +\
                 "> ")
 
-    response = input(
-            "If you didn't enter"
-    )
 
     # ask user for schedule customization (max credits per semester)
     max_credits = 16
@@ -62,9 +68,9 @@ def main():
                     max_credits = int(response)
                     break
                 else:
-                    print("Please enter a number greater than or equal to 12.")
+                    print("The number you entered is not greater than or equal to 12.")
             except ValueError:
-                print("Please enter a valid integer greater than or equal to 12.")
+                print("The input entered is not a valid integer greater than or equal to 12.")
             response = input("> ")
 
 

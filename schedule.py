@@ -1,13 +1,15 @@
 from course import Course
 import logging as log
 
-logging.basicConfig(filename='schedule_builder.log', encoding='utf-8', format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+# log.basicConfig(filename='schedule_builder.log', format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=log.DEBUG)
+log.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=log.DEBUG)
+
 
 class Schedule:
-    def __init__(self, courses_taken, max_credits, math_course):
-        self.courses_taken = courses_taken
-        self.max_credits = max_credits
-        self.math_course = math_course
+    def __init__(self):
+        self.courses_taken = []
+        self.max_credits = 16
+        self.math_course = ""
         self.requirements = {
             "major": {
                 "CMSC131": "",
@@ -27,20 +29,59 @@ class Schedule:
                 "FSMA": "",
                 "FSOC": "",
                 "FSPW": "",
+                "DSNS": "",
                 "DSNL": "",
-                "DSNL2": "",
                 "DSHS": "",
                 "DSHS2": "",
                 "DVUP": "",
                 "DVUP/DVCC": "",
                 "DSSP": "",
+                "DSSP2": "",
                 "DSHU": "",
                 "DSHU2": "",
-                "DSSP2": "",
                 "SCIS": "",
                 "SCIS2": ""
             }
         }
+
+    def add_requirement(self, req): # req is either string ("PLC FSAW") or Course obj (MATH140)
+        gen_eds = []
+        if str(req)[0:3] == "PLC": # prior learning credit
+            gen_eds = req[4:]
+        else:
+            gen_eds = req.gen_ed
+
+        for gen_ed in gen_eds: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
+            # fill DSNS with DSNL if DSNL filled
+            if gen_ed == "DSNL" and self.requirements["gen_ed"]["DSNL"] != "":
+                self.requirements["gen_ed"]["DSNS"] == req
+
+            # fill DSHS2 if DSHS filled
+            elif gen_ed == "DSHS" and self.requirements["gen_ed"]["DSHS"] != "" :
+                self.requirements["gen_ed"]["DSHS"] == req
+
+            # fill DVUP/DVCC with DVUP if DVUP filled
+            elif gen_ed == "DVUP" and self.requirements["gen_ed"]["DVUP"] != "":
+                self.requirements["gen_ed"]["DVUP/DVCC"] == req
+
+            # fill DSSP2 if DSSP filled
+            elif gen_ed == "DSSP" and self.requirements["gen_ed"]["DSSP"] != "":
+                self.requirements["gen_ed"]["DSSP2"] == req
+
+            # fill DSHU2 if DSHU filled
+            elif gen_ed == "DSHU" and self.requirements["gen_ed"]["DSHU"] != "":
+                self.requirements["gen_ed"]["DSHU2"] == req
+
+            # fill SCIS2 if SCIS filled
+            elif gen_ed == "SCIS" and self.requirements["gen_ed"]["SCIS"] != "":
+                self.requirements["gen_ed"]["SCIS2"] == req
+
+            else:
+                if gen_ed in self.requirements["gen_ed"].keys():
+                    self.requirements["gen_ed"][requirement] == req
+                    break
+                elif str(req)[0:3] == "PLC": # if not PLC, already fulfilled gen-ed credits
+                    raise KeyError(req + " is not a valid PLC.")
 
     def calculate_requirements(self, courses):
         for course in courses:
@@ -72,7 +113,7 @@ class Schedule:
         no_prereqs_counter = 0
         unfulfilled_prereqs = {}
         priority_courses = []
-
+        high_priority_courses = []
 
 
         # put courses into groups
@@ -91,10 +132,12 @@ class Schedule:
             while (prereq_pos < prereq_len):
                 prereq_fulfilled = False
 
-                # if math course with math prereq and is lower or equal math course to math credit/placement
-                if course.dept_id == "MATH" and prereqs[prereq_pos][0:4] == "MATH" \
-                        and int( prereqs[prereq_pos][4:] ) <= int( str(math_course)[4:] ):
+                # if math prereq is lower or equal math course to math credit/placement, ignore it
+                if prereqs[prereq_pos][0:4] == "MATH" \
+                        and int( prereqs[prereq_pos][4:] ) <= int( str(self.math_course)[4:] ):
                     prereq_fulfilled = True # bypass prereq check
+                    del prereqs[prereq_pos]
+                    prereq_len = len(prereqs)
                     log.debug("Bypasses prereq check, %s is a MATH course", str(course))
 
                 else: # all other courses
@@ -137,11 +180,11 @@ class Schedule:
             if len(prereqs) == 0:
                 log.debug("All prereqs for %s were met", str(course))
                 groups[group_pos].append(course)
-                courses.pop(pos)
+                courses.pop(course_pos)
             else:
                 log.debug("Not all prereqs for %s were met", str(course))
                 no_prereqs_counter += 1
-                pos += 1
+                course_pos += 1
 
             # if none of the courses left to be scheduled can be taken, and the current semester is empty,
             # show what prereqs are needed to take the remaining courses
@@ -161,7 +204,7 @@ class Schedule:
                     no_prereqs_counter = 0
 
         log.info("Finished putting courses into groups")
-
+        log.debug("Groups: %s", str(groups))
 
 
         # put courses from groups into semesters
@@ -173,50 +216,75 @@ class Schedule:
 
         considered_courses = groups[0]
         course_pos = 0
+        group_pos = 0 # reset
         still_priority_courses = False
+        add_priority = False
         fill_semester = False
+        added_all_classes = False
 
         # Iterates through considered_courses, adding priority courses. When reaches end of list,
         # iterates once more trying to fill up the semester with other non-priority courses until it hits max credits.
         # If there are no more priority courses Then, adds the next group of courses to considered_courses
-        while considered_courses != []:
+        while not added_all_classes:
             if course_pos >= len(considered_courses): # triggers once per loop
                 log.debug("Loop end conditional triggered")
+                log.debug("considered_courses: %s", str(considered_courses))
+                log.debug("Groups: %s", str(groups))
+                log.debug("Schedule: %s", str(schedule))
                 course_pos = 0
-                if not fill_semester: # if haven't filled up semester, fill semester
+
+                # fill semester if there are no high priority or priority courses
+                if not fill_semester and high_priority_courses == [] and not still_priority_courses:
                     log.debug("Filling up semester")
                     fill_semester = True
-                else: # filled semester so add a new semester
-                    schedule.append([])
-                    semester_pos += 1
-                    semester_credits = 0
-                    fill_semester = False
-                    log.debug("Adding semester %s", str(semester_pos))
-                    # if aren't still more priority courses and still more groups, add next group to considered_courses
-                    if not still_priority_courses and group_pos + 1 < len(group_pos):
-                        group_pos += 1
-                        log.debug("Adding new group: %s", str(groups[group_pos]))
-                        considered_courses.extend(groups[group_pos])
-                        log.debug("considered_courses = %s", str(considered_courses))
+                else: # either still high priority or priority courses so add semester
+                    if schedule[semester_pos] == []: # current semester is empty
+                        raise RuntimeError("Current semester is empty")
+                    else:
+                        if group_pos + 1 < len(groups): # still additional group to add
+                            group_pos += 1
+                            log.debug("Adding new group: %s", str(groups[group_pos]))
+                            considered_courses.extend(groups[group_pos])
+                            log.debug("considered_courses now is %s", str(considered_courses))
+                        else:
+                            log.debug("No more groups to add")
 
-            # if not filling semester and course is priority course, see if can add it
-            if not fill_semester and considered_courses[course_pos] in priority_courses:
-                if semester_credits + considered_courses[course_pos] <= self.max_credits:
-                    log.debug("Adding priority course %s", str(considered_courses[course_pos]))
-                    schedule[semester_pos].append(considered_courses[course_pos])
-                    del considered_courses[course_pos]
-                else:
-                    log.debug("Couldn't add priority course %s", str(considered_courses[course_pos]))
-                    still_priority_courses = True
+                        if len(considered_courses) > 0:
+                            schedule.append([])
+                            semester_pos += 1
+                            semester_credits = 0
+                            fill_semester = False
+                            log.debug("Adding semester %s", str(semester_pos + 1))
+                        else:
+                            log.debug("No more courses to add")
+                            added_all_classes = True
+
+
+            if len(considered_courses) > 0:
+                # if is high priority course or if not filling semester and is priority course, try to add it
+                if considered_courses[course_pos] in high_priority_courses \
+                        or (not fill_semester and considered_courses[course_pos] in priority_courses):
+                    if semester_credits + considered_courses[course_pos].credits <= self.max_credits:
+                        log.debug("Adding priority course %s", str(considered_courses[course_pos]))
+                        schedule[semester_pos].append(considered_courses[course_pos])
+                        del considered_courses[course_pos]
+                    else:
+                        log.debug("Couldn't add priority course %s", str(considered_courses[course_pos]))
+                        still_priority_courses = True
+                        course_pos += 1
+                # else if filling semester and can add course, add it
+                elif fill_semester:
+                    if semester_credits + considered_courses[course_pos].credits <= self.max_credits:
+                        log.debug("Filling semester with course %s", str(considered_courses[course_pos]))
+                        schedule[semester_pos].append(considered_courses[course_pos])
+                        del considered_courses[course_pos]
+                    else:
+                        log.debug("Couldn't add fill course %s", str(considered_courses[course_pos]))
+                        course_pos += 1
+                else: # otherwise
+                    log.debug("Skipping course %s", str(considered_courses[course_pos]))
+                    log.debug("fill_semester: %s, semester_credits: %s, considered_courses: %s", str(fill_semester), str(semester_credits), str(considered_courses[course_pos].credits))
                     course_pos += 1
-            # else if filling semester and can add course, add it
-            elif fill_semester and semester_credits + considered_courses[course_pos] <= self.max_credits:
-                log.debug("Filling semester with course %s", str(considered_courses[course_pos]))
-                schedule[semester_pos].append(considered_courses[course_pos])
-                del considered_courses[course_pos]
-            else: # otherwise
-                log.debug("Skipping course %s", str(considered_courses[course_pos]))
-                course_pos += 1
 
         self.schedule = schedule
         log.debug("Finished building the schedule")
