@@ -2,19 +2,17 @@ import urllib.error
 from urllib.request import urlopen
 import json
 import pprint
-import numpy as np
 
+API_url = "https://api.umd.io/v1"
 
-API = "https://api.umd.io/v1"
-
-class ApiHandler():
-    def __init__(self, url, semester=None):
+class API():
+    def __init__(self, url=API_url, semester=None):
         self.api = url
         if semester:
             self.semester = str(semester)
         else:
-            self.semester = str(self.sendQuery("courses/semesters", pages=False, semester=False)[-1])
-        self.num_courses = len(self.sendQuery("courses/list", pages=False))
+            self.semester = str(self.send_query("courses/semesters", pages=False, semester=False)[-1])
+        self.num_courses = len(self.send_query("courses/list", pages=False))
 
     def getCourse(self, dept_id=None, credits=None, gen_ed=None):
         """
@@ -61,7 +59,7 @@ class ApiHandler():
 
 
 
-    def getCourseByID(self, course_id):
+    def get_course_by_id(self, course_id):
         """
         Get a course given the course_id. Returns a JSON representing the course.
 
@@ -69,11 +67,11 @@ class ApiHandler():
         :return: A JSON representation the course and the data attributed to it.
         """
         try:
-            return self.sendQuery("/courses/" + course_id, pages=False)
+            return self.send_query("/courses/" + course_id, pages=False)
         except urllib.error.HTTPError as e:
             raise KeyError("The course \"" + course_id + "\" does not exist.")
 
-    def sendQuery(self, query, pages=True, semester=True):
+    def send_query(self, query, pages=True, semester=True):
         """
         I do not entirely understand what I wrote to make this work, but it does the thing when you call it.
 
@@ -101,5 +99,5 @@ class ApiHandler():
         else:
             return json.load(urlopen(self.api + "/" + query + end))
 
-    def numCourses(self, dept_id=None, credits=None, gen_ed=None):
-        return len(self.getCourse(dept_id=dept_id, credits=credits, gen_ed=gen_ed))
+    def num_courses(self, dept_id=None, credits=None, gen_ed=None):
+        return len(self.get_course(dept_id=dept_id, credits=credits, gen_ed=gen_ed))

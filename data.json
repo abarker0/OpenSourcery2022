@@ -1,0 +1,927 @@
+[
+    {
+        "course_id": "AASP100",
+        "semester": "202208",
+        "name": "Introduction to African American Studies",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Significant aspects of the history of African Americans with particular emphasis on the evolution and development of black communities from slavery to the present. Interdisciplinary introduction to social, political, legal and economic roots of contemporary problems faced by blacks in the United States with applications to the lives of other racial and ethnic minorities in the Americas and in other societies.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "SH",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP100-0101",
+            "AASP100-0401",
+            "AASP100-0301",
+            "AASP100-0501",
+            "AASP100-0201",
+            "AASP100-0601"
+        ]
+    },
+    {
+        "course_id": "AASP100H",
+        "semester": "202208",
+        "name": "Introduction to African American Studies",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Significant aspects of the history of African Americans with particular emphasis on the evolution and development of black communities from slavery to the present. Interdisciplinary introduction to social, political, legal and economic roots of contemporary problems faced by blacks in the United States with applications to the lives of other racial and ethnic minorities in the Americas and in other societies.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "SH",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP100H-0101"
+        ]
+    },
+    {
+        "course_id": "AASP101",
+        "semester": "202208",
+        "name": "Public Policy and the Black Community",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "The impact of public policies on the black community and the role of the policy process in affecting the social, economic and political well-being of minorities. Particular attention given to the post-1960 to present era.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail"
+        ],
+        "gen_ed": [
+            [
+                "DSHS"
+            ]
+        ],
+        "core": [
+            "SB"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": "AASP300.",
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP101-0201",
+            "AASP101-0101"
+        ]
+    },
+    {
+        "course_id": "AASP187",
+        "semester": "202208",
+        "name": "The New Jim Crow: African-Americans, Mass Incarceration and the Prison Industrial Complex",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Students will examine the birth of the racial caste system following the abolition of slavery, the parallels between the racial hierarchy of the Jim Crow system and contemporary mass incarceration, and the rise of the prison industrial complex as a multi-billon business which thrives on the oppression of low-income populations and poor communities of color.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP",
+                "SCIS"
+            ]
+        ],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": "Recommended: AASP100.",
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP187-0101"
+        ]
+    },
+    {
+        "course_id": "AASP200",
+        "semester": "202208",
+        "name": "African Civilization",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "A survey of African civilizations from 4500 B.C. to present. Analysis of traditional social systems. Discussion of the impact of European colonization on these civilizations. Analysis of the influence of traditional African social systems on modern African institutions as well as discussion of contemporary processes of Africanization.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHU"
+            ]
+        ],
+        "core": [
+            "H"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP200-0101",
+            "AASP200-FC01"
+        ]
+    },
+    {
+        "course_id": "AASP202",
+        "semester": "202208",
+        "name": "Black Culture in the United States",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "The course examines important aspects of African American life and thought which are reflected in African American literature, drama, music and art. Beginning with the cultural heritage of slavery, the course surveys the changing modes of black creative expression from the 19th-century to the present.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "SH",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP202-0103",
+            "AASP202-0101",
+            "AASP202-0102",
+            "AASP202-0104"
+        ]
+    },
+    {
+        "course_id": "AASP202H",
+        "semester": "202208",
+        "name": "Black Culture in the United States",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "The course examines important aspects of African American life and thought which are reflected in African American literature, drama, music and art. Beginning with the cultural heritage of slavery, the course surveys the changing modes of black creative expression from the 19th-century to the present.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "SH",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP202H-0103",
+            "AASP202H-0101"
+        ]
+    },
+    {
+        "course_id": "AASP210",
+        "semester": "202208",
+        "name": "Intro to Research Design and Analysis in African American Studies",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Introduces students to quantitative and qualitative research methods used in social science with a focus on Black populations and African American Studies Research. Uses practical exercises, such as class surveys and mock focus groups, to examine fundamental concepts of the research process from conceptualization of research questions to interpretation of data and research articles. The course is designed for undergraduate students with little or no background knowledge in social science research methods.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP210-0101"
+        ]
+    },
+    {
+        "course_id": "AASP230",
+        "semester": "202208",
+        "name": "Social (In)Justice and African-American Health and Well-Being",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "African Americans suffer worse outcomes than non-Hispanic whites on nearly every health measure and outcomes that link to overall well-being like depressive symptoms or homicides. Health disparities are experienced by other underrepresented minority groups, but because of the unique historic and current experiences of African Americans, the determinants and solutions to African American health disparities are unique. The premise of this course is that African American health disparities are due to social injustices perpetuated on the institutional level that have permeated the lived experiences of African Americans leading to racial disparities in health and well-being. As such, the solutions on the both policy, and community, level must have a social justice approach.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP",
+                "SCIS"
+            ]
+        ],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP230-0101"
+        ]
+    },
+    {
+        "course_id": "AASP298B",
+        "semester": "202208",
+        "name": "Constructions of Manhood and Womanhood in the Black Community",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Investigates the ways that African Americans are represented and constructed in public and private spheres and explores the social constructions and representations of Black manhood and womanhood from various disciplinary perspectives.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHS",
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "H",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": "WMST265.",
+            "restrictions": null,
+            "additional_info": "Cross-listed with: WGSS265.",
+            "also_offered_as": null,
+            "credit_granted_for": "WMST265, AASP298B or WGSS265."
+        },
+        "sections": [
+            "AASP298B-0101"
+        ]
+    },
+    {
+        "course_id": "AASP298C",
+        "semester": "202208",
+        "name": "African-American History to 1865",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Survey of the principal developments in the history and culture of the peoples of African descent in colonial North America and the United States to 1865. Examines the African past, the Atlantic slave trade, variation in slavery, the growth of free black communities, the transformations of families and cultural forms, and patterns of resistance.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "SH",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": "Cross-listed with: HIST254.",
+            "also_offered_as": null,
+            "credit_granted_for": "HIST254 or AASP298C."
+        },
+        "sections": [
+            "AASP298C-0101"
+        ]
+    },
+    {
+        "course_id": "AASP298L",
+        "semester": "202208",
+        "name": "African-American Literature and Culture",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "An exploration of the stories black authors tell about themselves, their communities, and the nation as informed by time and place, gender, sexuality, and class. African American perspective themes such as art, childhood, sexuality, marriage, alienation and mortality, as well as representations of slavery, Reconstruction, racial violence and the Nadir, legalized racism and segregation, black patriotism and black ex-patriots, the optimism of integration, and the prospects of a post-racial America.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [
+            [
+                "DSHU",
+                "DVUP"
+            ]
+        ],
+        "core": [
+            "HL",
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": "Cross-listed with: ENGL234. Cross-listed with ENGL234. Credit granted for AASP298L or ENGL234.",
+            "also_offered_as": null,
+            "credit_granted_for": "ENGL234 or AASP298L."
+        },
+        "sections": [
+            "AASP298L-0201"
+        ]
+    },
+    {
+        "course_id": "AASP298M",
+        "semester": "202208",
+        "name": "Martin Luther King Jr.",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Examines the life and work of Martin Luther King, Jr. We immediately rethink the image of King who liberals and conservatives construct as a dreamer of better race relations. We engage the complexities of an individual, who articulated a moral compass of the nation, to explore racial justice in post-World War II America. This course gives special attention to King's post-1965 radicalism when he called for a reordering of American society, an end to the war in Vietnam, and supported sanitation workers striking for better wages and working conditions. Topics include King's notion of the \"beloved community\", the Social Gospel, liberalism, \"socially conscious democracy\", militancy, the politics of martyrdom, poverty and racial justice, and compensatory treatment. Primary sources form the core of our readings.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail"
+        ],
+        "gen_ed": [
+            [
+                "DSHS"
+            ]
+        ],
+        "core": [
+            "D"
+        ],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": "Cross-listed with: HIST108C, AMST189C.",
+            "also_offered_as": null,
+            "credit_granted_for": "HIST108C, AASP298M, or AMST189C."
+        },
+        "sections": [
+            "AASP298M-0101"
+        ]
+    },
+    {
+        "course_id": "AASP298P",
+        "semester": "202208",
+        "name": "Special Topics in African American Studies; Poverty, Race and African-American Children",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP298P-0101"
+        ]
+    },
+    {
+        "course_id": "AASP301",
+        "semester": "202208",
+        "name": "Applied Policy Analysis and the Black Community",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Development and application of the tools needed for examining the effectiveness of alternative policy options confronting minority communities. Review policy research methods used in forming and evaluating policies. Examination of the policy process.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": "AASP101; and (ECON201 or ECON200).",
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": "Recommended: Completion of one semester of statistics is recommended.",
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP301-0101"
+        ]
+    },
+    {
+        "course_id": "AASP310",
+        "semester": "202208",
+        "name": "African Slave Trade",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "The relationship of the slave trade of Africans to the development of British capitalism and its industrial revolution; and to the economic and social development of the Americas.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": "AASP202 or AASP100; or permission of BSOS-African American Studies department.",
+            "formerly": "AASP311.",
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP310-0101"
+        ]
+    },
+    {
+        "course_id": "AASP313",
+        "semester": "202208",
+        "name": "Black Women in United States History",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Black American women's history from slavery to the present. Focused on gaining a fuller understanding of the effect of race, class and gender on the life cycles and multiple roles of Black women as mothers, daughters, wives, workers and social-change agents.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": "WMST314.",
+            "restrictions": "Sophomore standing or higher.",
+            "additional_info": "Cross-listed with: WGSS314.  For Fall 2020:  Credit granted for AASP313, HIST329E, or WMST314.",
+            "also_offered_as": "HIST329E.",
+            "credit_granted_for": "AASP313, WMST314 or WGSS314."
+        },
+        "sections": [
+            "AASP313-0101"
+        ]
+    },
+    {
+        "course_id": "AASP317",
+        "semester": "202208",
+        "name": "Black in Latin America and the Caribbean",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "The goal of this course is to have an understanding of race, color, and blackness across the Americas. We will compare and contrast forms of racial categorization, discrimination, and ideologies, whether in the form of nation-building projects, addressing racial inequality, or sexuality and family formation. We will draw primarily on social science perspectives, including the work of sociologists and political scientists.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP317-0101"
+        ]
+    },
+    {
+        "course_id": "AASP320",
+        "semester": "202208",
+        "name": "Poverty and African American Children",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "The United States has high levels of child poverty compared to other industrialized nations. Poverty rates are particularly high among African American children. This course focuses on how poverty and race intersect to influence the development of children and youth. Specific topics that we will consider include definitions of poverty, theories about the causes of poverty, racial disparities in child poverty, family functioning in the context of poverty, neighborhood influences, risk and protective processes, and social policies and programs designed to mitigate the impact of poverty.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": "AASP298P.",
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": "AASP320 or AASP298P."
+        },
+        "sections": [
+            "AASP320-0101"
+        ]
+    },
+    {
+        "course_id": "AASP370",
+        "semester": "202208",
+        "name": "Spike Lee's Joints",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "In offering extended formal considerations of Spike Lee's cinematic oeuvre--in particular his uses of light, sound, and color--this course is interested in how various modes of critical inquiry can enable or broaden our cultural, political, or historical engagement with a film. We will pay special attention to the question of what it means to encapsulate a specific cultural moment, particularly in relation to differing demands of fictional and non-fictional representation, in sound and image. As well, we will attend to how Lee's aesthetic techniques, cultural politics, and wide-ranging critique of the American racial caste system helps us think about the role of film in ongoing struggles for racial justice.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": "Cross-listed with: CINE353.",
+            "also_offered_as": null,
+            "credit_granted_for": "AASP370 or CINE353."
+        },
+        "sections": [
+            "AASP370-0101"
+        ]
+    },
+    {
+        "course_id": "AASP386",
+        "semester": "202208",
+        "name": "Experiential Learning",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Restriction: Permission of BSOS-African American Studies department; and junior standing or higher.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP386-0101"
+        ]
+    },
+    {
+        "course_id": "AASP397",
+        "semester": "202208",
+        "name": "Senior Thesis",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Directed research in African American Studies resulting in the completion and defense of a senior thesis.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": "Permission of BSOS-African American Studies department.",
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": []
+    },
+    {
+        "course_id": "AASP398B",
+        "semester": "202208",
+        "name": "Selected Topics in the African Diaspora; Black Immigrants: Challenges and Impacts",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Cross-listed with IMMR319D.   How does immigration affect Black communities in the United States? How are foreign Black affected by living in the United States? Students will learn about: US history of immigration policy; pull and push factors driving Black migration; comparisons in socioeconomic outcomes between foreign and native Blacks; and differences between 1st and 2nd generation Black immigrants.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": "AASP398B or IMMR319D."
+        },
+        "sections": [
+            "AASP398B-0101"
+        ]
+    },
+    {
+        "course_id": "AASP398G",
+        "semester": "202208",
+        "name": "Selected Topics in the African Diaspora; Gender, Labor and Racial Identities in Diaspora Communities",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Cross-listed with AMST328K.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": "AASP398G or AMST328K."
+        },
+        "sections": [
+            "AASP398G-0101"
+        ]
+    },
+    {
+        "course_id": "AASP398Q",
+        "semester": "202208",
+        "name": "Selected Topics in the African Diaspora; Black Baltimore in the Post Racial U.S: African American Urban Culture in the Age of Obama",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP398Q-0101"
+        ]
+    },
+    {
+        "course_id": "AASP398V",
+        "semester": "202208",
+        "name": "Selected Topics in the African Diaspora; African American Public History",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Cross-listed with HIST329J and AMST328F.   This course analyzes the field of public history through the lens of African American history, considering the myriad ways beyond the classroom that African American history is circulated and consumed by the general public. By examining museums, historic sites, monuments, films and documentaries, and the digital landscape, students will examine and critique how historical narratives focusing on the experiences of peoples of African descent in the United States have been constructed in public spaces.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": "HIST329J, AASP398V, or AMST328F."
+        },
+        "sections": [
+            "AASP398V-0101"
+        ]
+    },
+    {
+        "course_id": "AASP399",
+        "semester": "202208",
+        "name": "Research in African-American Studies",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "1",
+        "description": "",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": []
+    },
+    {
+        "course_id": "AASP401",
+        "semester": "202208",
+        "name": "Research Directions in African-American Studies",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Utilizing a pro seminar format, this course offers an overview of recent research on the experiences of African Americans and the African diaspora. The course  will cover selective topics from research portfolios of department faculty related to the status of African Americans and the diaspora across a number of topics. Students will read recent original research studies and discuss with the authors both the theoretical underpinnings of the research, the methods and evaluate the interpretations. This course fulfills the capstone requirement for African American studies majors and certificate students by providing an opportunity to consolidate and integrate a range of ideas encountered in the curriculum.",
+        "grading_method": [
+            "Regular"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": "Must have earned a minimum of 90 credits; and must be major in African-American Studies.",
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP401-0101"
+        ]
+    },
+    {
+        "course_id": "AASP478E",
+        "semester": "202208",
+        "name": "Humanities Topics in African American Studies; Black Digitalities",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "Cross-listed with ENGL438B.",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": "ENGL438B or AASP478E."
+        },
+        "sections": [
+            "AASP478E-0101"
+        ]
+    },
+    {
+        "course_id": "AASP498J",
+        "semester": "202208",
+        "name": "Special Topics in Black Culture; Racial Socialization of Children and Adolescents: Theory, Research and Practice",
+        "dept_id": "AASP",
+        "department": "African American Studies",
+        "credits": "3",
+        "description": "",
+        "grading_method": [
+            "Regular",
+            "Pass-Fail",
+            "Audit"
+        ],
+        "gen_ed": [],
+        "core": [],
+        "relationships": {
+            "coreqs": null,
+            "prereqs": null,
+            "formerly": null,
+            "restrictions": null,
+            "additional_info": null,
+            "also_offered_as": null,
+            "credit_granted_for": null
+        },
+        "sections": [
+            "AASP498J-0101"
+        ]
+    }
+]
