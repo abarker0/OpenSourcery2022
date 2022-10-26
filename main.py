@@ -27,7 +27,7 @@ def main():
                     "> ")
                 try:
                     course = Course(response) # check if response is valid course
-                    if response[0:4] == "MATH"
+                    if response[0:4] == "MATH":
                         math_course = course
                         done = True
                         break
@@ -59,7 +59,7 @@ def main():
 
     response = input("Would you like to set a maximum number of credits per semester? The default is 16. (y/n)\n" + \
             "> ")
-    if response == y:
+    if response == "y":
         response = input("Enter the maximum number of credits you want to take per semester, minimum is 12. Enter \"-1\" to stop.\n" + \
                 "> ")
         while response != -1:
@@ -74,8 +74,20 @@ def main():
             response = input("> ")
 
 
-    schedule = Schedule(coursesTaken, max_credits, math_course)
-    print(schedule.build_schedule())
+    schedule = Schedule(courses_taken, max_credits, math_course)
+
+    print(schedule.build_schedule() + "\n")
+    print("These are your Gen-eds \n")
+    print(schedule.show_gen_eds())
+
+    while (True):
+        response = input("Would you like to search for some Gen-Ed courses? (y/n)")
+        if response == "y":
+            response = input ("What gen-eds would you like to fill? (Either enter 1 or multiple that could potentially be filled by the same class) \n")
+            # this line is where we include the method that will search and return the courses that fit those gen eds
+
+            respone = input("Choose a different combination of gen-eds (no such class was found that fits those gen-eds)")
+        break
 
 if __name__ == "__main__":
     main()

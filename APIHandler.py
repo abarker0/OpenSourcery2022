@@ -35,7 +35,7 @@ class API():
             first = False
         if gen_ed:
             if not first:
-                query += "&"
+                query += "&"    
             query += "gen_ed=" + gen_ed
             first = False
         try:
