@@ -3,12 +3,14 @@ import base64
 import APIHandler
 from course import Course
 from schedule import Schedule
+import logging as log
 import re
 
+log.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=log.DEBUG)
 
 courses_taken = []
 def main():
-    schedule = Schedule()
+    schedule = Schedule() 
 
     # intro
     print("Welcome to Mini College Advisor. We will help you create your semester plans at the University of Maryland College Park.")
@@ -22,7 +24,7 @@ def main():
             "To stop, enter \"END\".\n" + \
             "> ")
     done = False
-
+    
     while (response != "END"):
         def verifyResponse(response):
             regex = "^[a-zA-Z]{4}[0-9]{3}$"
@@ -43,7 +45,8 @@ def main():
                 try:
                     schedule.add_requirement(response)
                     print(response + " successfully added.")
-                except KeyError:
+                except KeyError as ke:
+                    log.debug(ke)
                     print("The PLC you entered is not a valid PLC.")
             else:
                 print(response, "is not a valid course or PLC.")
@@ -70,6 +73,7 @@ def main():
                             "you have credit for. This would likely be decided by your math placement exam. Format: \"MATHXXX\"\n> "))
 
     schedule.math_course = highestMath
+    print(schedule.courses_taken)
 
 
     # ask user for schedule customization (max credits per semester)
@@ -87,14 +91,14 @@ def main():
                     break
                 else:
                     print("The number you entered is not greater than or equal to 12.")
-            except ValueError:
+            except ValueError as ve:
+                log.debug(ve)
                 print("The input entered is not a valid integer greater than or equal to 12.")
             response = input("> ")
 
     schedule.max_credits = max_credits
-    schedule.courses_taken = courses_taken
+    schedule.math_course = math_course
 
-    print(schedule.build_schedule(courses_taken))
     print("These are your Gen-eds \n")
     print(schedule.show_gen_eds())
 
@@ -102,9 +106,14 @@ def main():
         response = input("Would you like to search for some Gen-Ed courses? (y/n)")
         if response == "y":
             response = input ("What gen-eds would you like to fill? (Either enter 1 or multiple that could potentially be filled by the same class) \n")
+            if " " in response:
+                response = response.split(" ")
             # this line is where we include the method that will search and return the courses that fit those gen eds
-
-            respone = input("Choose a different combination of gen-eds (no such class was found that fits those gen-eds)")
+            courses = API.getCourse(gen_ed=response[0])
+            del response[0]
+            for gen_ed in response:
+                courses = courses[gen_ed]
+            response = input("Choose a different combination of gen-eds (no such class was found that fits those gen-eds)")
         break
 
 

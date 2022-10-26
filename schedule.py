@@ -1,15 +1,14 @@
 from course import Course
 import logging as log
 
-# log.basicConfig(filename='schedule_builder.log', format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=log.DEBUG)
 log.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=log.DEBUG)
 
 
 class Schedule:
-    def __init__(self):
+    def __init__(self, math_course="", max_credits=16):
         self.courses_taken = []
-        self.max_credits = 16
-        self.math_course = ""
+        self.max_credits = max_credits
+        self.math_course = math_course
         self.requirements = {
             "major": {
                 "CMSC131": "",
@@ -45,63 +44,65 @@ class Schedule:
         }
 
     def add_requirement(self, req): # req is either string ("PLC FSAW") or Course obj (MATH140)
+        if type(req) == Course:
+            self.courses_taken.append(req)
+        
+        if type(req) == Course and req.name in self.requirements["major"].keys():
+            self.requirements["major"][req.id] = req
+        elif req.name[:5] == "STAT4":
+            self.requirements["major"]["STAT4XX"] = req
+        elif req.name[:5] == "CMSC4":
+            for r in self.requirements["major"]["CMSC4XX"]:
+                if r == "":
+                    r = req
+                    break
+
         gen_eds = []
         if str(req)[0:3] == "PLC": # prior learning credit
             gen_eds = req[4:]
         else:
             gen_eds = req.gen_ed
+        
+        for gen_ed_list in gen_eds: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
+            for gen_ed in gen_ed_list:
+                # fill DSNS with DSNL if DSNL filled
+                if gen_ed == "DSNL" and self.requirements["gen_ed"]["DSNL"] != "":
+                    self.requirements["gen_ed"]["DSNS"] == req
 
-        for gen_ed in gen_eds: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
-            # fill DSNS with DSNL if DSNL filled
-            if gen_ed == "DSNL" and self.requirements["gen_ed"]["DSNL"] != "":
-                self.requirements["gen_ed"]["DSNS"] == req
+                # fill DSHS2 if DSHS filled
+                elif gen_ed == "DSHS" and self.requirements["gen_ed"]["DSHS"] != "" :
+                    self.requirements["gen_ed"]["DSHS"] == req
 
-            # fill DSHS2 if DSHS filled
-            elif gen_ed == "DSHS" and self.requirements["gen_ed"]["DSHS"] != "" :
-                self.requirements["gen_ed"]["DSHS"] == req
+                # fill DVUP/DVCC with DVUP if DVUP filled
+                elif gen_ed == "DVUP" and self.requirements["gen_ed"]["DVUP"] != "":
+                    self.requirements["gen_ed"]["DVUP/DVCC"] == req
 
-            # fill DVUP/DVCC with DVUP if DVUP filled
-            elif gen_ed == "DVUP" and self.requirements["gen_ed"]["DVUP"] != "":
-                self.requirements["gen_ed"]["DVUP/DVCC"] == req
+                # fill DSSP2 if DSSP filled
+                elif gen_ed == "DSSP" and self.requirements["gen_ed"]["DSSP"] != "":
+                    self.requirements["gen_ed"]["DSSP2"] == req
 
-            # fill DSSP2 if DSSP filled
-            elif gen_ed == "DSSP" and self.requirements["gen_ed"]["DSSP"] != "":
-                self.requirements["gen_ed"]["DSSP2"] == req
+                # fill DSHU2 if DSHU filled
+                elif gen_ed == "DSHU" and self.requirements["gen_ed"]["DSHU"] != "":
+                    self.requirements["gen_ed"]["DSHU2"] == req
 
-            # fill DSHU2 if DSHU filled
-            elif gen_ed == "DSHU" and self.requirements["gen_ed"]["DSHU"] != "":
-                self.requirements["gen_ed"]["DSHU2"] == req
+                # fill SCIS2 if SCIS filled
+                elif gen_ed == "SCIS" and self.requirements["gen_ed"]["SCIS"] != "":
+                    self.requirements["gen_ed"]["SCIS2"] == req
 
-            # fill SCIS2 if SCIS filled
-            elif gen_ed == "SCIS" and self.requirements["gen_ed"]["SCIS"] != "":
-                self.requirements["gen_ed"]["SCIS2"] == req
-
-            else:
-                if gen_ed in self.requirements["gen_ed"]:
-                    self.requirements["gen_ed"][gen_ed] == req
-                    break
-                elif str(req)[0:3] == "PLC": # if not PLC, already fulfilled gen-ed credits
-                    raise KeyError(req + " is not a valid PLC.")
+                else:
+                    if gen_ed in self.requirements["gen_ed"].keys():
+                        self.requirements["gen_ed"][gen_ed] == req
+                        break
+                    elif str(req)[0:3] == "PLC": # if not PLC, already fulfilled gen-ed credits
+                        raise KeyError(req + " is not a valid PLC.")
 
     def calculate_requirements(self, courses):
-        for course in courses:
-            if course.gen_ed != []: # check gen-eds
-                for ge in gen_ed[0]:
-                    if self.requirements["gen_ed"][ge] == "":
-                        self.requirements["gen_ed"][ge] = course
+        pass
 
-            else: # check if major requirement
-                if course in self.requirements["major"].keys(): # if course in major reqs
-                    self.requirements["major"][course] = course
-                else: # check if non-specific requirement
-                    if course.dept_id in self.requirements["major"].keys(): # if course is STAT4XX or CMSC4XX
-                        if type(self.requirements["major"][ course.dept_id ]) != list: # if the req is not a list
-                            self.requirements["major"][ course.dept_id ] = course
-                        else:
-                            for req in self.requirements["major"][ course.dept_id ]: # for req, check if req is empty
-                                if req == "":
-                                    req = course
-                                    break
+        
+        
+        
+
     def show_gen_eds(self):
         return self.requirements["gen_ed"]
 
