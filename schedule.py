@@ -77,8 +77,8 @@ class Schedule:
                 self.requirements["gen_ed"]["SCIS2"] == req
 
             else:
-                if gen_ed in self.requirements["gen_ed"].keys():
-                    self.requirements["gen_ed"]["requirement"] == req
+                if gen_ed in self.requirements["gen_ed"]:
+                    self.requirements["gen_ed"][gen_ed] == req
                     break
                 elif str(req)[0:3] == "PLC": # if not PLC, already fulfilled gen-ed credits
                     raise KeyError(req + " is not a valid PLC.")

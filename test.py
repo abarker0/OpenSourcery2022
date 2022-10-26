@@ -1,6 +1,7 @@
 import APIHandler
 from course import Course
 from schedule import Schedule
+from pprint import pp
 
 def main():
     MATH140 = Course("MATH140")

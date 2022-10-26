@@ -57,8 +57,6 @@ class API():
                     filteredCourses[genEd] = [course]
         return filteredCourses
 
-
-
     def get_course_by_id(self, course_id):
         """
         Get a course given the course_id. Returns a JSON representing the course.
