@@ -14,7 +14,7 @@ class API():
             self.semester = str(self.send_query("courses/semesters", pages=False, semester=False)[-1])
         self.num_courses = len(self.send_query("courses/list", pages=False))
 
-    def getCourse(self, dept_id=None, credits=None, gen_ed=None):
+    def get_course(self, dept_id=None, credits=None, gen_ed=None):
         """
         Get a Course with the given values:
 
@@ -39,23 +39,23 @@ class API():
             query += "gen_ed=" + gen_ed
             first = False
         try:
-            return self.sendQuery(query)
+            return self.send_query(query)
         except urllib.error.HTTPError as e:
             raise KeyError("The given call is invalid. Call: " + query)
 
-    def filterGenEd(self, courses):
-        filteredCourses = {}
+    def filter_gen_ed(self, courses):
+        filtered_courses = {}
         for course in courses:
-            genEds = set()
-            for genEdList in course["gen_ed"]:
-                for genEd in genEdList:
-                    genEds.add(genEd)
-            for genEd in genEds:
-                if genEd in filteredCourses:
-                    filteredCourses[genEd].append(course)
+            gen_eds = set()
+            for gen_ed_list in course["gen_ed"]:
+                for gen_ed in gen_ed_list:
+                    gen_eds.add(gen_ed)
+            for gen_ed in gen_eds:
+                if gen_ed in filtered_courses:
+                    filtered_courses[gen_ed].append(course)
                 else:
-                    filteredCourses[genEd] = [course]
-        return filteredCourses
+                    filtered_courses[gen_ed] = [course]
+        return filtered_courses
 
     def get_course_by_id(self, course_id):
         """

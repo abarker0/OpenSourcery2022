@@ -46,55 +46,53 @@ class Schedule:
     def add_requirement(self, req): # req is either string ("PLC FSAW") or Course obj (MATH140)
         if type(req) == Course:
             self.courses_taken.append(req)
-        
-        if type(req) == Course and req.name in self.requirements["major"].keys():
-            self.requirements["major"][req.id] = req
-        elif req.name[:5] == "STAT4":
-            self.requirements["major"]["STAT4XX"] = req
-        elif req.name[:5] == "CMSC4":
-            for r in self.requirements["major"]["CMSC4XX"]:
-                if r == "":
-                    r = req
-                    break
 
-        gen_eds = []
-        if str(req)[0:3] == "PLC": # prior learning credit
-            gen_eds = req[4:]
-        else:
-            gen_eds = req.gen_ed
-        
-        for gen_ed_list in gen_eds: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
-            for gen_ed in gen_ed_list:
-                # fill DSNS with DSNL if DSNL filled
-                if gen_ed == "DSNL" and self.requirements["gen_ed"]["DSNL"] != "":
-                    self.requirements["gen_ed"]["DSNS"] == req
-
-                # fill DSHS2 if DSHS filled
-                elif gen_ed == "DSHS" and self.requirements["gen_ed"]["DSHS"] != "" :
-                    self.requirements["gen_ed"]["DSHS"] == req
-
-                # fill DVUP/DVCC with DVUP if DVUP filled
-                elif gen_ed == "DVUP" and self.requirements["gen_ed"]["DVUP"] != "":
-                    self.requirements["gen_ed"]["DVUP/DVCC"] == req
-
-                # fill DSSP2 if DSSP filled
-                elif gen_ed == "DSSP" and self.requirements["gen_ed"]["DSSP"] != "":
-                    self.requirements["gen_ed"]["DSSP2"] == req
-
-                # fill DSHU2 if DSHU filled
-                elif gen_ed == "DSHU" and self.requirements["gen_ed"]["DSHU"] != "":
-                    self.requirements["gen_ed"]["DSHU2"] == req
-
-                # fill SCIS2 if SCIS filled
-                elif gen_ed == "SCIS" and self.requirements["gen_ed"]["SCIS"] != "":
-                    self.requirements["gen_ed"]["SCIS2"] == req
-
-                else:
-                    if gen_ed in self.requirements["gen_ed"].keys():
-                        self.requirements["gen_ed"][gen_ed] == req
+            if req.id in self.requirements["major"].keys():
+                self.requirements["major"][req.id] = req
+            elif req.id[:5] == "STAT4":
+                self.requirements["major"]["STAT4XX"] = req
+            elif req.id[:5] == "CMSC4":
+                for r in self.requirements["major"]["CMSC4XX"]:
+                    if r == "":
+                        r = req
                         break
-                    elif str(req)[0:3] == "PLC": # if not PLC, already fulfilled gen-ed credits
-                        raise KeyError(req + " is not a valid PLC.")
+            
+            for gen_ed_list in req.gen_ed: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
+                for gen_ed in gen_ed_list:
+                    # fill DSNS with DSNL if DSNL filled
+                    if gen_ed == "DSNL" and self.requirements["gen_ed"]["DSNL"] != "":
+                        self.requirements["gen_ed"]["DSNS"] = req
+
+                    # fill DSHS2 if DSHS filled
+                    elif gen_ed == "DSHS" and self.requirements["gen_ed"]["DSHS"] != "" :
+                        self.requirements["gen_ed"]["DSHS"] = req
+
+                    # fill DVUP/DVCC with DVUP if DVUP filled
+                    elif gen_ed == "DVUP" and self.requirements["gen_ed"]["DVUP"] != "":
+                        self.requirements["gen_ed"]["DVUP/DVCC"] = req
+
+                    # fill DSSP2 if DSSP filled
+                    elif gen_ed == "DSSP" and self.requirements["gen_ed"]["DSSP"] != "":
+                        self.requirements["gen_ed"]["DSSP2"] = req
+
+                    # fill DSHU2 if DSHU filled
+                    elif gen_ed == "DSHU" and self.requirements["gen_ed"]["DSHU"] != "":
+                        self.requirements["gen_ed"]["DSHU2"] = req
+
+                    # fill SCIS2 if SCIS filled
+                    elif gen_ed == "SCIS" and self.requirements["gen_ed"]["SCIS"] != "":
+                        self.requirements["gen_ed"]["SCIS2"] = req
+                    
+                    else:
+                        if gen_ed in self.requirements["gen_ed"].keys():
+                            self.requirements["gen_ed"][gen_ed] = req
+
+        elif type(req) == str and req[0:3] == "PLC":
+            try:
+                gen_ed = req[4:]
+                self.requirements["gen_ed"][gen_ed] = "PLC"
+            except KeyError:
+                print(req + " is not a valid PLC. No requirement was added.")
 
     def calculate_requirements(self, courses):
         pass
