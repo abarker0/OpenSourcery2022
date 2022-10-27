@@ -1,6 +1,9 @@
 from http.client import InvalidURL
 import random
 import base64
+import sched
+
+from numpy import true_divide
 import APIHandler
 from course import Course
 from schedule import Schedule
@@ -106,23 +109,31 @@ def main():
         response = input ("What gen-eds would you like to fill? (Either enter 1 or multiple that could potentially be filled by the same class). To stop, enter \"END\".\n")
         while (response != "END"):
             response = response.split(" ") if " " in response else [response]
-            # this line is where we include the method that will search and return the courses that fit those gen eds
-            courses = API.filter_gen_ed(API.get_course(gen_ed = response[0]))
-            del response[0]
-            try:
-                for gen_ed in response:
-                    courses = API.filter_gen_ed(courses[gen_ed])
-            except KeyError:
-                print("No classes were found that have all of these gen-eds. Please enter a different combination.")
-                continue
-            for gen_ed_list in courses.keys():
-                for course in courses[gen_ed_list]:
-                    res = course['course_id'] + " "
-                    for gen_ed_list in course['gen_ed']:
-                        for gen_ed in gen_ed_list:
-                            res += gen_ed + " "
-                    print(res)
-            response = input ("Enter a different combination of gen-eds to search again, or stop by entering \"END\".\n")
+            validResponse = True
+            for gen_ed in response:
+                if gen_ed not in schedule.requirements['gen_ed'].keys():
+                    validResponse = False
+                    break
+            if validResponse:
+                # this line is where we include the method that will search and return the courses that fit those gen eds
+                courses = API.filter_gen_ed(API.get_course(gen_ed = response[0]))
+                del response[0]
+                try:
+                    for gen_ed in response:
+                        courses = API.filter_gen_ed(courses[gen_ed])
+                except KeyError:
+                    response = input("No classes were found that have all of these gen-eds. Please enter a different combination of gen-eds to search again, or stop by entering \"END\".\n.")
+                    continue
+                for gen_ed_list in courses.keys():
+                    for course in courses[gen_ed_list]:
+                        res = course['course_id'] + " "
+                        for gen_ed_list in course['gen_ed']:
+                            for gen_ed in gen_ed_list:
+                                res += gen_ed + " "
+                        print(res)
+                response = input ("Enter a different combination of gen-eds to search again, or stop by entering \"END\".\n")
+            else:
+                response = input ("One or more of the gen-eds entered are invalid. Please enter one or more valid gen-eds to search, or stop by entering \"END\".\n")
 
 
 
