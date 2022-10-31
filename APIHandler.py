@@ -57,6 +57,14 @@ class API():
                     filtered_courses[gen_ed] = [course]
         return filtered_courses
 
+    def filter_prefix(self, dept_id, id_prefix):
+        dept_courses = self.get_course(dept_id=dept_id)
+        filtered_courses = []
+        for course in dept_courses:
+            if course.startswith(id_prefix, beg=3):
+                filtered_courses.append(course)
+        return filtered_courses
+
     def get_course_by_id(self, course_id):
         """
         Get a course given the course_id. Returns a JSON representing the course.

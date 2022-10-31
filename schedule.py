@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 from course import Course
 import logging as log
 
@@ -43,68 +44,85 @@ class Schedule:
             }
         }
 
-    def add_requirement(self, req): # req is either string ("PLC FSAW") or Course obj (MATH140)
-        if type(req) == Course:
-            self.courses_taken.append(req)
+    def add_previous_course(self, prev): # req is either string ("PLC FSAW") or Course obj (MATH140)
+        if type(prev) == Course:
+            self.courses_taken.append(prev)
 
-            if req.id in self.requirements["major"].keys():
-                self.requirements["major"][req.id] = req
-            elif req.id[:5] == "STAT4":
-                self.requirements["major"]["STAT4XX"] = req
-            elif req.id[:5] == "CMSC4":
+            if prev.id in self.requirements["major"].keys():
+                self.requirements["major"][prev.id] = prev
+            elif prev.id[:5] == "STAT4":
+                self.requirements["major"]["STAT4XX"] = prev
+            elif prev.id[:5] == "CMSC4":
                 for r in self.requirements["major"]["CMSC4XX"]:
                     if r == "":
-                        r = req
+                        r = prev
                         break
             
-            for gen_ed_list in req.gen_ed: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
+            for gen_ed_list in prev.gen_ed: # slightly more efficient to just overwrite whatever is in DSNS or DNHS bc don't have to check for loop
                 for gen_ed in gen_ed_list:
                     # fill DSNS with DSNL if DSNL filled
                     if gen_ed == "DSNL" and self.requirements["gen_ed"]["DSNL"] != "":
-                        self.requirements["gen_ed"]["DSNS"] = req
+                        self.requirements["gen_ed"]["DSNS"] = prev
 
                     # fill DSHS2 if DSHS filled
                     elif gen_ed == "DSHS" and self.requirements["gen_ed"]["DSHS"] != "" :
-                        self.requirements["gen_ed"]["DSHS"] = req
+                        self.requirements["gen_ed"]["DSHS"] = prev
 
                     # fill DVUP/DVCC with DVUP if DVUP filled
                     elif gen_ed == "DVUP" and self.requirements["gen_ed"]["DVUP"] != "":
-                        self.requirements["gen_ed"]["DVUP/DVCC"] = req
+                        self.requirements["gen_ed"]["DVUP/DVCC"] = prev
 
                     # fill DSSP2 if DSSP filled
                     elif gen_ed == "DSSP" and self.requirements["gen_ed"]["DSSP"] != "":
-                        self.requirements["gen_ed"]["DSSP2"] = req
+                        self.requirements["gen_ed"]["DSSP2"] = prev
 
                     # fill DSHU2 if DSHU filled
                     elif gen_ed == "DSHU" and self.requirements["gen_ed"]["DSHU"] != "":
-                        self.requirements["gen_ed"]["DSHU2"] = req
+                        self.requirements["gen_ed"]["DSHU2"] = prev
 
                     # fill SCIS2 if SCIS filled
                     elif gen_ed == "SCIS" and self.requirements["gen_ed"]["SCIS"] != "":
-                        self.requirements["gen_ed"]["SCIS2"] = req
+                        self.requirements["gen_ed"]["SCIS2"] = prev
                     
                     else:
                         if gen_ed in self.requirements["gen_ed"].keys():
-                            self.requirements["gen_ed"][gen_ed] = req
+                            self.requirements["gen_ed"][gen_ed] = prev
 
-        elif type(req) == str and req[0:3] == "PLC":
+        elif type(prev) == str and prev[0:3] == "PLC":
             try:
-                gen_ed = req[4:]
+                gen_ed = prev[4:]
                 self.requirements["gen_ed"][gen_ed] = "PLC"
             except KeyError:
-                print(req + " is not a valid PLC. No requirement was added.")
+                print(prev + " is not a valid PLC. No requirement was added.")
 
-    def calculate_requirements(self, courses):
-        pass
+    def calculate_requirements(self):
+        requirements = [ [] , [] ]
+        for major_req in self.requirements["major"]:
+            if type(self.requirements["major"][major_req]) == list:
+                for req in self.requirements["major"][major_req]:
+                    if req == "":
+                        requirements[0].append(major_req)
+                        break
+            else:
+                if self.requirements["major"][major_req] == "":
+                    requirements[0].append(major_req)
+        
+        for gen_ed in self.requirements["gen_ed"]:
+            if self.requirements["gen_ed"][gen_ed] == "":
+                requirements[1].append(gen_ed)
 
-        
-        
-        
+        return requirements        
 
     def show_gen_eds(self):
-        return self.requirements["gen_ed"]
+        gen_eds = ""
+        for k, v in self.requirements["gen_ed"].items():
+            gen_eds += k + ": " + str(v) + "\n"
+        return gen_eds
 
     def build_schedule(self, courses_to_schedule):
+        if courses_to_schedule == []:
+            raise ValueError("courses_to_schedule is empty")
+
         courses = courses_to_schedule.copy()
         course_pos = 0
 
@@ -288,13 +306,39 @@ class Schedule:
                     course_pos += 1
 
         self.schedule = schedule
-        log.debug("Finished building the schedule")
+        log.info("Finished building the schedule")
 
-        return self.format_schedule(schedule, name=True, description=True, credits=True, gen_ed=True, dept_id=True, prereqs=True)
+        return self.format_schedule(schedule, id=True, name=True, description=True, credits=True, gen_ed=True, dept_id=True, prereqs=True)
+
+    def format_course(self, course, id=True, name=False, description=False, credits=False, gen_ed=False, dept_id=False, prereqs=False):
+        if not id and not name:
+            raise ValueError("id or name must be True.")
+        course_str = ""
+        if id:
+            course_str += course.id
+            if name:
+                course_str += ":"
+            course_str += " "
+        if name:
+            course_str += course.name + " "
+        if dept_id:
+            course_str += "(" + course.dept_id + ") "
+        if credits:
+            course_str += "(" + str(course.credits) + ") "
+        if description:
+            # keep only the first sentence of the description
+            short_desc = course.description[ : course.description.index(".") + 1]
+            course_str += "\n- Description: " + short_desc + " "
+        if prereqs:
+            course_str += "\n- Prerequisites: " + str(course.prereqs) + " "
+        if gen_ed:
+            course_str += "\n- Gen eds: " + str(course.gen_ed) + " "
+
+        return course_str
 
     def format_schedule(self, schedule, id=True, name=False, description=False, credits=False, gen_ed=False, dept_id=False, prereqs=False):
         if not id and not name:
-            raise Exception("id or name must be True.")
+            raise ValueError("id or name must be True.")
         if type(schedule) != list:
             raise TypeError("schedule is not a list")
 
@@ -303,26 +347,10 @@ class Schedule:
         for semester in schedule:
             fschedule += "-"*10 + "Semester " + str(counter) + "-"*10 + "\n"
             for course in semester:
-                if id:
-                    fschedule += course.id
-                    if name:
-                        fschedule += ":"
-                    fschedule += " "
-                if name:
-                    fschedule += course.name + " "
-                if dept_id:
-                    fschedule += "(" + course.dept_id + ") "
-                if credits:
-                    fschedule += "(" + str(course.credits) + ") "
-                if description:
-                    # keep only the first sentence of the description
-                    short_desc = course.description[ : course.description.index(".") + 1]
-                    fschedule += "\n> Description: " + short_desc + " "
-                if prereqs:
-                    fschedule += "\n> Prerequisites: " + str(course.prereqs) + " "
-                if gen_ed:
-                    fschedule += "\n> Gen eds: " + str(course.gen_ed) + " "
-                fschedule += "\n\n"
+                fschedule += self.format_course(course, id=id, name=name, description=description, credits=credits, gen_ed=gen_ed, dept_id=dept_id, prereqs=prereqs) + "\n\n"
             fschedule += "\n"
             counter += 1
         return fschedule
+
+    
+        

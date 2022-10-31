@@ -16,10 +16,12 @@ def main():
     STAT400 = Course("STAT400")
 
 
-    prev_courses = ['MATH140', 'CMSC131']
+    prev_courses = [MATH140, CMSC131]
     schedule = Schedule()
-    schedule.courses_taken = prev_courses
+    for course in prev_courses:
+        schedule.add_previous_course(course)
     schedule.math_course = "MATH140"
+    print(schedule.calculate_requirements())
 
     course_list = [MATH141, CMSC132, CMSC216, CMSC250, MATH240, CMSC330, CMSC351, STAT400]
 
