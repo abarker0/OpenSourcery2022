@@ -45,6 +45,7 @@ def main():
         if response != "END":
             response = input("Enter another course or PLC or enter \"END\" to stop.\n" + \
                             "> ").upper()
+        response = "CMSC100"
 
     def ensureMath():
         maths = set([course.id for course in schedule.courses_taken if "MATH" in course.id] + [prereq for course in schedule.courses_taken for prereq in course.prereqs if "MATH" in prereq])
